@@ -1,0 +1,27 @@
+.container {
+  width: 100%;
+  display: flex;
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+
+body, html {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.card {
+  flex: 1;
+  padding: 20px;
+  margin: 5px;
+  background-color: gray;
+}
+
+.selected {
+  margin-top: -50px;
+}
