@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  
+  const sock = io();
   // make a function that adds cards to each players hand based on whether you are emperor or slave and whether you are opponent. 
   // do not have the cards hard coded on the HTML and use javascript to add
 
@@ -32,9 +32,27 @@ document.addEventListener("DOMContentLoaded", () => {
     cards.forEach((card) => {
       if (card.classList.contains("selected")) {
         card.classList.remove("selected");
-        let audio = new Audio("/client/assets/zawazawa.wav");
+        let audio = new Audio("assets/zawazawa.wav");
         audio.play();
       }
     });
   }
 });
+
+
+(() => {
+
+  const sock = io();
+
+  // const onClick = (e) => {
+  //   const { x, y } = getClickCoordinates(canvas, e);
+  //   sock.emit('turn', getCellCoordinates(x, y));
+  // };
+
+  // sock.on('message', log);
+  // document
+  //   .querySelector('#chat-form')
+  //   .addEventListener('submit', onChatSubmitted(sock));
+
+  // canvas.addEventListener('click', onClick);
+})();
