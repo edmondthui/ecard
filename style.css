@@ -1,12 +1,12 @@
 .container {
   width: 100%;
   display: flex;
-  margin-top: 100px;
-  margin-bottom: 100px;
+  margin: auto;
+  justify-content: center;
 }
 
 body, html {
-  height: 100%;
+  height: 99%;
 }
 
 .play {
@@ -21,13 +21,11 @@ body {
 }
 
 .card {
-  flex: 1;
-  padding: 20px;
   margin: 5px;
-  height: 200px;
-  background-color: gray;
+  background-color: black;
+  border: 5px solid transparent;
 }
 
 .selected {
-  margin-top: -50px;
+  border: 5px solid yellow
 }
