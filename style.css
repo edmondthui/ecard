@@ -34,10 +34,14 @@ body {
 }
 
 .selected {
-  border: 5px solid yellow;
+  border: 5px solid #FFDC00;
 }
 
 .player .card:hover {
-  border: 5px solid yellow;
+  border: 5px solid #FFDC00;
   cursor: pointer;
+}
+
+.opponent .card img {
+  
 }
