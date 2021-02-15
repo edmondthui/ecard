@@ -9,16 +9,22 @@ body, html {
   height: 100%;
 }
 
+.play {
+  width: 10%;
+}
+
 body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 }
 
 .card {
   flex: 1;
   padding: 20px;
   margin: 5px;
+  height: 200px;
   background-color: gray;
 }
 
