@@ -28,6 +28,9 @@ body {
   margin: 5px;
   background-color: black;
   border: 5px solid transparent;
+  align-items: center;
+  justify-content: center;
+  display: flex;
 }
 
 .selected {
