@@ -56,18 +56,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const sock = io();
 
-  // const onClick = (e) => {
-  //   const { x, y } = getClickCoordinates(canvas, e);
-  //   sock.emit('turn', getCellCoordinates(x, y));
-  // };
-
-  // sock.on('message', log);
-  // document
-  //   .querySelector('#chat-form')
-  //   .addEventListener('submit', onChatSubmitted(sock));
-
-  // canvas.addEventListener('click', onClick);
-
   document.querySelector("#chat-form").addEventListener("submit", submitChat);
 
   sock.on('message', (text) => {
