@@ -1,5 +1,17 @@
+const log = (text) => {
+
+};
+
+const chatSubmitted = (sock) => (e) => {
+  e.preventDefault();
+  let input = document.querySelector('#chat');
+  let text = input.value;
+  input.value = '';
+  sock.emit('message', text);
+}
+
+
 document.addEventListener("DOMContentLoaded", () => {
-  const sock = io();
   // make a function that adds cards to each players hand based on whether you are emperor or slave and whether you are opponent. 
   // do not have the cards hard coded on the HTML and use javascript to add
 
@@ -55,4 +67,11 @@ document.addEventListener("DOMContentLoaded", () => {
   //   .addEventListener('submit', onChatSubmitted(sock));
 
   // canvas.addEventListener('click', onClick);
+
+  document.querySelector("#chat-form").addEventListener("submit", submitChat);
+
+  sock.on('message', (text) => {
+    message(text);
+  })
+
 })();

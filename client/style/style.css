@@ -1,3 +1,56 @@
+/* CHAT CSS */
+
+.chat-wrapper {
+  flex: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0 20px;
+  height: 450px;
+  width: 100%;
+}
+
+.chat-form {
+  display: flex;
+}
+
+#chat {
+  margin: 0 10px 0 0;
+}
+
+#say {
+  width: 80px;
+}
+
+.message {
+  line-height: 0.7em;
+  opacity: 0.5;
+  margin: 5px;
+  padding: 8px;
+  border-radius: 10px;
+  width: 45%;
+}
+
+.incoming {
+  background-color: #ABB5B5;
+  margin-right: auto;
+
+}
+
+.outgoing {
+  background-color: #7BC7C6;
+  margin-left: auto;
+}
+
+.chat-messages {
+  width: 100%;
+  height: 100%;
+}
+
+
+/* GAME CSS */
+
 .container {
   width: 100%;
   display: flex;
@@ -19,9 +72,20 @@ body, html {
 
 body {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  padding: 0 100px;
+  margin: 0;
   align-items: center;
+  justify-content: center;
+
+}
+
+.game {
+  flex: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;  
+  padding: 0 20px;
+  height: 100%;
 }
 
 .card {
@@ -29,7 +93,6 @@ body {
   background-color: black;
   border: 5px solid transparent;
   align-items: center;
-  justify-content: center;
   display: flex;
 }
 

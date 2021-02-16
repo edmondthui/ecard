@@ -11,9 +11,12 @@ const server = http.createServer(app);
 const io = socketio(server);
 
 io.on('connection', (sock) => {
-
-  console.log("connected");
+  console.log("someone connected");  
 });
+
+io.on('disconnect', (sock) => {
+  console.log("someone disconnected");
+})
 
 server.on('error', (err) => {
   console.error(err);
