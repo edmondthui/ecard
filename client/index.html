@@ -5,11 +5,28 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style/style.css" />
-    <link rel="shortcut icon" type="image/jpg" href="assets/back.jpg"/>
+    <link rel="shortcut icon" type="image/jpg" href="assets/back.jpg" />
     <title>E Card | Inspired by Kaiji</title>
   </head>
   <body>
-    <div class = "game">
+    <div class="join-game">
+      <form>
+        <label
+          >Username:
+          <input class="username" type="text" />
+        </label>
+        <label
+          >Room Id:
+          <input class="room" type="text" />
+        </label>
+        <div class="room-buttons">
+          <input class="join" type="submit" value="Join Room" />
+          <input class="create" type="submit" value="Create Room" />
+        </div>
+      </form>
+    </div>
+
+    <div class="game">
       <div class="opponent container">
         <div class="card"><img src="assets/back.jpg" /></div>
         <div class="card"><img src="assets/back.jpg" /></div>
@@ -17,9 +34,9 @@
         <div class="card"><img src="assets/back.jpg" /></div>
         <div class="card"><img src="assets/back.jpg" /></div>
       </div>
-  
+
       <button class="play">Play Card</button>
-  
+
       <div class="player container">
         <div class="card"><img src="assets/emperor.jpg" /></div>
         <div class="card"><img src="assets/citizen.jpg" /></div>
@@ -29,22 +46,18 @@
       </div>
     </div>
 
-    <div class ="chat-wrapper">
-      <div class ="top-bar">
+    <div class="chat-wrapper">
+      <div class="top-bar">
         <div class="name">Ya Boy Skinny P</div>
       </div>
-      <div class = "chat-messages">
-        <div class="incoming message">test incoming</div>
-        <div class="outgoing message">test outgoing</div>
-      </div>
-      <div class = "chat-form">
-        <input id="chat" autocomplete="off" type="text">
+      <div class="chat-messages"></div>
+      <form class="chat-form">
+        <input id="chat" autocomplete="off" type="text" />
         <button id="say">Submit</button>
-      </div>
+      </form>
     </div>
   </body>
 
-
-  <script src='/socket.io/socket.io.js'></script>
+  <script src="/socket.io/socket.io.js"></script>
   <script src="src/app.js"></script>
 </html>

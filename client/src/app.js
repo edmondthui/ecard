@@ -1,18 +1,33 @@
-const log = (text) => {
+username = "";
+roomId = 0;
 
+const message = (text) => {
+  const parent = document.querySelector(".chat-messages");
+  const el = document.createElement("li");
+  el.innerHTML = text.text;
+  text.username === username
+    ? el.setAttribute("class", "message outgoing")
+    : el.setAttribute("class", "message incoming");
+  parent.appendChild(el);
+  parent.scrollTop = parent.scrollHeight;
 };
 
-const chatSubmitted = (sock) => (e) => {
+const submitChat = (sock) => (e) => {
+  username = "Edmond";
   e.preventDefault();
-  let input = document.querySelector('#chat');
-  let text = input.value;
-  input.value = '';
-  sock.emit('message', text);
-}
-
+  let input = document.querySelector("#chat");
+  let message = {
+    username: username,
+    text: input.value,
+  };
+  input.value = "";
+  if (message.text.length > 0) {
+    sock.emit("message", message);
+  }
+};
 
 document.addEventListener("DOMContentLoaded", () => {
-  // make a function that adds cards to each players hand based on whether you are emperor or slave and whether you are opponent. 
+  // make a function that adds cards to each players hand based on whether you are emperor or slave and whether you are opponent.
   // do not have the cards hard coded on the HTML and use javascript to add
 
   const cards = document.querySelectorAll(".card");
@@ -51,15 +66,14 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-
 (() => {
-
   const sock = io();
 
-  document.querySelector("#chat-form").addEventListener("submit", submitChat);
+  document
+    .querySelector(".chat-form")
+    .addEventListener("submit", submitChat(sock));
 
-  sock.on('message', (text) => {
+  sock.on("message", (text) => {
     message(text);
-  })
-
+  });
 })();

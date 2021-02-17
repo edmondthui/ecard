@@ -30,24 +30,25 @@
   padding: 8px;
   border-radius: 10px;
   width: 45%;
+  list-style-type: none;
 }
 
 .incoming {
-  background-color: #ABB5B5;
+  background-color: #abb5b5;
   margin-right: auto;
-
 }
 
 .outgoing {
-  background-color: #7BC7C6;
+  background-color: #7bc7c6;
   margin-left: auto;
 }
 
 .chat-messages {
   width: 100%;
   height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
-
 
 /* GAME CSS */
 
@@ -58,7 +59,8 @@
   justify-content: center;
 }
 
-body, html {
+body,
+html {
   height: 99%;
 }
 
@@ -76,14 +78,13 @@ body {
   margin: 0;
   align-items: center;
   justify-content: center;
-
 }
 
 .game {
   flex: 4;
   display: flex;
   flex-direction: column;
-  align-items: center;  
+  align-items: center;
   padding: 0 20px;
   height: 100%;
 }
@@ -97,10 +98,10 @@ body {
 }
 
 .selected {
-  border: 5px solid #FFDC00;
+  border: 5px solid #ffdc00;
 }
 
 .player .card:hover {
-  border: 5px solid #FFDC00;
+  border: 5px solid #ffdc00;
   cursor: pointer;
 }
