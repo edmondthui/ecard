@@ -9,6 +9,7 @@
   padding: 0 20px;
   height: 450px;
   width: 100%;
+  display: none;
 }
 
 .chat-form {
@@ -87,6 +88,7 @@ body {
   align-items: center;
   padding: 0 20px;
   height: 100%;
+  display: none;
 }
 
 .card {

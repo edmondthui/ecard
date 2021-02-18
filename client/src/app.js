@@ -1,11 +1,13 @@
-username = "";
-roomId = 0;
+let playerData = {
+  username: "",
+  roomId: "",
+};
 
 const message = (text) => {
   const parent = document.querySelector(".chat-messages");
   const el = document.createElement("li");
   el.innerHTML = text.text;
-  text.username === username
+  text.username === playerData.username
     ? el.setAttribute("class", "message outgoing")
     : el.setAttribute("class", "message incoming");
   parent.appendChild(el);
@@ -13,17 +15,70 @@ const message = (text) => {
 };
 
 const submitChat = (sock) => (e) => {
-  username = "Edmond";
   e.preventDefault();
   let input = document.querySelector("#chat");
   let message = {
-    username: username,
+    username: playerData.username,
     text: input.value,
   };
   input.value = "";
   if (message.text.length > 0) {
     sock.emit("message", message);
   }
+};
+
+// const hostGame = (sock) => (e) => {
+//   e.preventDefault();
+//   let playerData = {
+//     username: document.querySelector(".username").value,
+//   };
+//   let gameId = (Math.random() * 1000000) | 0;
+//   sock.emit("newGame", { gameId: gameId, username: playerData.username });
+//   // sock.join(gameId.toString());
+//   let joinGame = document.querySelector(".join-game");
+//   joinGame.parentNode.removeChild(joinGame);
+// };
+
+const joinGame = (sock) => (e) => {
+  e.preventDefault();
+  playerData.username = document.querySelector(".username").value;
+  playerData.roomId = document.querySelector(".room").value;
+  sock.emit("joinGame", {
+    gameId: playerData.roomId,
+    username: playerData.username,
+  });
+  let joinGame = document.querySelector(".join-game");
+  joinGame.parentNode.removeChild(joinGame);
+};
+
+const waiting = () => {
+  let div = document.createElement("div");
+  document.body.appendChild(div);
+  div.classList.add("loading");
+
+  let h1 = document.createElement("h1");
+  h1.innerHTML = "Waiting on player 2";
+  // div.appendChild(h1);
+
+  let img = document.createElement("img");
+  img.setAttribute("src", "assets/drinking.gif");
+
+  // div.appendChild(img);
+  div.appendChild(h1);
+  div.appendChild(img);
+};
+
+const startGame = () => {
+  let loading = document.querySelector(".loading");
+  if (loading) {
+    loading.setAttribute("style", "display: none");
+  }
+  let game = document.querySelector(".game");
+  game.setAttribute("style", "display: flex");
+  let chat = document.querySelector(".chat-wrapper");
+  chat.setAttribute("style", "display: flex");
+  let name = document.querySelector(".name");
+  name.innerHTML = playerData.username;
 };
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -76,4 +131,15 @@ document.addEventListener("DOMContentLoaded", () => {
   sock.on("message", (text) => {
     message(text);
   });
+
+  sock.on("waiting", () => {
+    waiting();
+  });
+
+  sock.on("startGame", () => {
+    startGame();
+  });
+
+  // document.querySelector(".create").addEventListener("click", hostGame(sock));
+  document.querySelector(".join").addEventListener("click", joinGame(sock));
 })();
