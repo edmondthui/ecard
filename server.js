@@ -8,6 +8,7 @@ app.use(express.static(`${__dirname}/client`));
 
 const server = http.createServer(app);
 const io = socketio(server);
+const port = process.env.PORT || 8080;
 
 io.on("connection", (sock) => {
   // console.log("connected");
@@ -40,6 +41,6 @@ server.on("error", (err) => {
   console.error(err);
 });
 
-server.listen(8080, () => {
+server.listen(port, () => {
   // console.log("server is ready");
 });
