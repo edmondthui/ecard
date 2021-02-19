@@ -58,12 +58,10 @@ const waiting = () => {
 
   let h1 = document.createElement("h1");
   h1.innerHTML = `Waiting on player 2 to join room ${playerData.roomId}`;
-  // div.appendChild(h1);
 
   let img = document.createElement("img");
   img.setAttribute("src", "assets/drinking.gif");
 
-  // div.appendChild(img);
   div.appendChild(h1);
   div.appendChild(img);
 };
@@ -79,7 +77,15 @@ const startGame = () => {
   chat.setAttribute("style", "display: flex");
   let name = document.querySelector(".name");
   name.innerHTML = playerData.username;
+
+  let music = document.querySelector(".music");
+  music.volume = 0.005;
+  music.play();
+
+  // setupBoard();
 };
+
+const setupBoard = () => {};
 
 document.addEventListener("DOMContentLoaded", () => {
   // make a function that adds cards to each players hand based on whether you are emperor or slave and whether you are opponent.
