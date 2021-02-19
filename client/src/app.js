@@ -57,7 +57,7 @@ const waiting = () => {
   div.classList.add("loading");
 
   let h1 = document.createElement("h1");
-  h1.innerHTML = "Waiting on player 2";
+  h1.innerHTML = `Waiting on player 2 to join room ${playerData.roomId}`;
   // div.appendChild(h1);
 
   let img = document.createElement("img");
