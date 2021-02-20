@@ -38,10 +38,27 @@ io.on("connection", (sock) => {
       io.to(game.roomId).emit("startGame", games[game.roomId]);
     } else if (players.size < 2) {
       games[game.roomId] = [game];
-      io.to(game.roomId).emit("waiting", games[game.roomId][0]);
+      io.to(game.roomId).emit("waitingJoin", games[game.roomId][0]);
     }
+
     sock.on("message", (text) => {
       io.to(game.roomId).emit("message", text);
+    });
+
+    sock.on("play", (cardData) => {
+      let playerIndex = games[game.roomId].findIndex(
+        (game) => game.username === cardData.username
+      );
+      games[game.roomId][playerIndex].card = cardData.card;
+      if (games[game.roomId][0].card && games[game.roomId][1].card) {
+        console.log(games[game.roomId]);
+        let result = {};
+        // the result will be who wins and the current score which will be added to the player data
+        io.to(game.roomId).emit("result", result);
+        games[game.roomId].forEach((player) => (player.card = ""));
+      } else {
+        io.to(game.roomId).emit("waitingPlay");
+      }
     });
   });
 

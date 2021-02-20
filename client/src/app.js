@@ -1,7 +1,11 @@
+const sock = io();
+
 let playerData = {
   username: "",
   roomId: "",
   player: 0,
+  card: "",
+  score: "",
 };
 
 const message = (text) => {
@@ -97,9 +101,7 @@ const startGame = (setup) => {
 };
 
 const setupBoard = (setup) => {
-  let player = setup.filter(
-    (player) => player.username === playerData.username
-  )[0];
+  let player = setup.find((player) => player.username === playerData.username);
 
   let opponentContainer = document.querySelector(".opponent");
   if (opponentContainer.children.length !== 0) {
@@ -124,14 +126,14 @@ const setupBoard = (setup) => {
   }
   if (player.player === 1) {
     let emperor = document.createElement("div");
-    emperor.classList.add("card");
+    emperor.classList.add("emperor", "card");
     let face = document.createElement("img");
     face.setAttribute("src", "assets/emperor.jpg");
     emperor.appendChild(face);
     playerContainer.appendChild(emperor);
     for (let i = 0; i < 4; i++) {
       let citizen = document.createElement("div");
-      citizen.classList.add("card");
+      citizen.classList.add("citizen", "card");
       let face = document.createElement("img");
       face.setAttribute("src", "assets/citizen.jpg");
       citizen.appendChild(face);
@@ -139,25 +141,59 @@ const setupBoard = (setup) => {
     }
   } else if (player.player === 2) {
     let slave = document.createElement("div");
-    slave.classList.add("card");
+    slave.classList.add("slave", "card");
     let face = document.createElement("img");
     face.setAttribute("src", "assets/slave.jpg");
     slave.appendChild(face);
     playerContainer.appendChild(slave);
     for (let i = 0; i < 4; i++) {
       let citizen = document.createElement("div");
-      citizen.classList.add("card");
+      citizen.classList.add("citizen", "card");
       let face = document.createElement("img");
       face.setAttribute("src", "assets/citizen.jpg");
       citizen.appendChild(face);
       playerContainer.appendChild(citizen);
     }
   }
+
+  const playButton = document.querySelector(".play");
+  playButton.addEventListener("click", play);
+  const cards = document.querySelectorAll(".card");
+  cards.forEach((card) => {
+    if (!card.parentElement.classList.contains("opponent")) {
+      card.addEventListener("click", selectCard);
+    }
+  });
+};
+
+const selectCard = (e) => {
+  selected = e.currentTarget;
+  let selectedElements = document.querySelectorAll(".selected");
+  if (selectedElements.length < 1) {
+    e.currentTarget.classList.add("selected");
+  } else {
+    selectedElements[0].classList.remove("selected");
+    e.currentTarget.classList.add("selected");
+  }
+};
+
+const play = (e) => {
+  e.preventDefault();
+  const cards = document.querySelectorAll(".card");
+  const container = document.querySelector(".player");
+  cards.forEach((card) => {
+    if (card.classList.contains("selected")) {
+      card.classList.remove("selected");
+      let audio = new Audio("assets/zawazawa.wav");
+      audio.play();
+      playerData.card = card.classList[0];
+      sock.emit("play", playerData);
+      container.removeChild(card);
+    }
+  });
 };
 
 (() => {
-  const sock = io();
-
   document
     .querySelector(".chat-form")
     .addEventListener("submit", submitChat(sock));
@@ -166,12 +202,34 @@ const setupBoard = (setup) => {
     message(text);
   });
 
-  sock.on("waiting", (game) => {
+  sock.on("waitingJoin", (game) => {
     waiting(game);
   });
 
   sock.on("startGame", (game) => {
     startGame(game);
+  });
+
+  sock.on("result", (result) => {
+    playerData.card = "";
+    const playCardButton = document.querySelector(".play");
+    playCardButton.disabled = false;
+    playCardButton.innerHTML = "Play Card";
+    let opponentContainer = document.querySelector(".opponent");
+    opponentContainer.removeChild(opponentContainer.lastChild);
+    if (result === "win" || result === "lose") {
+      //reset the board
+    } else {
+      //continue with the game
+    }
+  });
+
+  sock.on("waitingPlay", () => {
+    if (playerData.card !== "") {
+      const playCardButton = document.querySelector(".play");
+      playCardButton.disabled = true;
+      playCardButton.innerHTML = "Waiting for other player...";
+    }
   });
 
   // document.querySelector(".create").addEventListener("click", hostGame(sock));
