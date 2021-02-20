@@ -61,13 +61,20 @@ const waiting = (game) => {
   div.classList.add("loading");
 
   let h1 = document.createElement("h1");
+
   h1.innerHTML = `Waiting on player 2 to join room ${game.roomId}`;
 
   let img = document.createElement("img");
   img.setAttribute("src", "assets/drinking.gif");
 
-  div.appendChild(h1);
   div.appendChild(img);
+  div.appendChild(h1);
+
+  for (let i = 0; i < 3; i++) {
+    let span = document.createElement("span");
+    span.innerHTML = ".";
+    h1.appendChild(span);
+  }
 };
 
 const startGame = (setup) => {

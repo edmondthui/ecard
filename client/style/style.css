@@ -109,6 +109,7 @@
 body,
 html {
   height: 99%;
+  font-family: sans-serif;
 }
 
 .play {
@@ -152,4 +153,92 @@ body {
 .player .card:hover {
   border: 5px solid #ffdc00;
   cursor: pointer;
+}
+
+/* JOIN ROOM CSS */
+
+.join-game {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  padding: 40px;
+  background-color: #356d3c;
+  background-image: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 35px,
+      rgba(255, 255, 255, 0.2) 35px,
+      rgba(255, 255, 255, 0.2) 70px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 35px,
+      rgba(255, 255, 255, 0.4) 35px,
+      rgba(255, 255, 255, 0.4) 70px
+    );
+  background-attachment: fixed;
+}
+
+.join-game input {
+  width: 100%;
+  padding: 10px 0;
+  font-size: 20px;
+  margin-bottom: 30px;
+  border: none;
+  border-bottom: 1px solid #fff;
+  outline: none;
+  background: transparent;
+}
+
+.join-game label {
+  font-size: 26px;
+  font-weight: 1000;
+}
+
+::placeholder {
+  color: black;
+}
+
+/* LOADING SCREEN */
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading h1 span {
+  animation-name: blink;
+
+  animation-duration: 1.4s;
+
+  animation-iteration-count: infinite;
+
+  animation-fill-mode: both;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 0.2;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.2;
+  }
+}
+
+.loading h1 span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.loading h1 span:nth-child(3) {
+  animation-delay: 0.4s;
 }
