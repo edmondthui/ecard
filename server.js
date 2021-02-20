@@ -28,7 +28,6 @@ io.on("connection", (sock) => {
     game.socketId = sock.id;
 
     let players = io.sockets.adapter.rooms.get(game.roomId);
-
     if (players.size === 2) {
       games[game.roomId].push(game);
       games[game.roomId].sort(() => {
@@ -36,14 +35,11 @@ io.on("connection", (sock) => {
       });
       games[game.roomId][0].player = 1;
       games[game.roomId][1].player = 2;
-
       io.to(game.roomId).emit("startGame", games[game.roomId]);
-      console.log(games);
     } else if (players.size < 2) {
       games[game.roomId] = [game];
       io.to(game.roomId).emit("waiting", games[game.roomId][0]);
     }
-
     sock.on("message", (text) => {
       io.to(game.roomId).emit("message", text);
     });
