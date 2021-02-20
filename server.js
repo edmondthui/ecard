@@ -14,10 +14,16 @@ const port = process.env.PORT || 8080;
 let games = {};
 
 io.on("connection", (sock) => {
-  // console.log("connected");
   sock.emit("message", { text: "You are connected" });
 
   sock.on("joinGame", (game) => {
+    while (
+      Array.isArray(games[game.roomId]) &&
+      games[game.roomId].length >= 2
+    ) {
+      game.roomId = (parseInt(game.roomId) + 1).toString();
+    }
+
     sock.join(game.roomId);
 
     let players = io.sockets.adapter.rooms.get(game.roomId);
@@ -32,16 +38,15 @@ io.on("connection", (sock) => {
 
       io.to(game.roomId).emit("startGame", games[game.roomId]);
       console.log(games);
-    } else {
+    } else if (players.size < 2) {
       games[game.roomId] = [game];
-      io.to(game.roomId).emit("waiting", games[game.roomId]);
+      io.to(game.roomId).emit("waiting", games[game.roomId][0]);
     }
 
     sock.on("message", (text) => {
       io.to(game.gameId).emit("message", text);
     });
 
-    // console.log(game);
   });
 });
 

@@ -53,14 +53,14 @@ const joinGame = (sock) => (e) => {
   joinGame.parentNode.removeChild(joinGame);
 };
 
-const waiting = () => {
+const waiting = (game) => {
   playerData.player = 1;
   let div = document.createElement("div");
   document.body.appendChild(div);
   div.classList.add("loading");
 
   let h1 = document.createElement("h1");
-  h1.innerHTML = `Waiting on player 2 to join room ${playerData.roomId}`;
+  h1.innerHTML = `Waiting on player 2 to join room ${game.roomId}`;
 
   let img = document.createElement("img");
   img.setAttribute("src", "assets/drinking.gif");
@@ -189,8 +189,8 @@ document.addEventListener("DOMContentLoaded", () => {
     message(text);
   });
 
-  sock.on("waiting", () => {
-    waiting();
+  sock.on("waiting", (game) => {
+    waiting(game);
   });
 
   sock.on("startGame", (game) => {
