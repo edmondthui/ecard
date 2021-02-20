@@ -1,6 +1,7 @@
 let playerData = {
   username: "",
   roomId: "",
+  player: 0,
 };
 
 const message = (text) => {
@@ -41,17 +42,19 @@ const submitChat = (sock) => (e) => {
 
 const joinGame = (sock) => (e) => {
   e.preventDefault();
+
   playerData.username = document.querySelector(".username").value;
   playerData.roomId = document.querySelector(".room").value;
-  sock.emit("joinGame", {
-    gameId: playerData.roomId,
-    username: playerData.username,
-  });
+  if (playerData.username == "") {
+    playerData.username = faker.name.firstName();
+  }
+  sock.emit("joinGame", playerData);
   let joinGame = document.querySelector(".join-game");
   joinGame.parentNode.removeChild(joinGame);
 };
 
 const waiting = () => {
+  playerData.player = 1;
   let div = document.createElement("div");
   document.body.appendChild(div);
   div.classList.add("loading");
@@ -66,7 +69,7 @@ const waiting = () => {
   div.appendChild(img);
 };
 
-const startGame = () => {
+const startGame = (setup) => {
   let loading = document.querySelector(".loading");
   if (loading) {
     loading.setAttribute("style", "display: none");
@@ -82,10 +85,58 @@ const startGame = () => {
   music.volume = 0.005;
   music.play();
 
-  // setupBoard();
+  setupBoard(setup);
 };
 
-const setupBoard = () => {};
+const setupBoard = (setup) => {
+  let player = setup.filter(
+    (player) => player.username === playerData.username
+  )[0];
+
+  let opponentContainer = document.querySelector(".opponent");
+  for (let i = 0; i < 5; i++) {
+    let flipped = document.createElement("div");
+    flipped.classList.add("card");
+    let back = document.createElement("img");
+    back.setAttribute("src", "assets/back.jpg");
+    flipped.appendChild(back);
+    opponentContainer.appendChild(flipped);
+  }
+
+  let playerContainer = document.querySelector(".player");
+  if (player.player === 1) {
+    let emperor = document.createElement("div");
+    emperor.classList.add("card");
+    let face = document.createElement("img");
+    face.setAttribute("src", "assets/emperor.jpg");
+    emperor.appendChild(face);
+    playerContainer.appendChild(emperor);
+
+    for (let i = 0; i < 4; i++) {
+      let citizen = document.createElement("div");
+      citizen.classList.add("card");
+      let face = document.createElement("img");
+      face.setAttribute("src", "assets/citizen.jpg");
+      citizen.appendChild(face);
+      playerContainer.appendChild(citizen);
+    }
+  } else if (player.player === 2) {
+    let slave = document.createElement("div");
+    slave.classList.add("card");
+    let face = document.createElement("img");
+    face.setAttribute("src", "assets/slave.jpg");
+    slave.appendChild(face);
+    playerContainer.appendChild(slave);
+    for (let i = 0; i < 4; i++) {
+      let citizen = document.createElement("div");
+      citizen.classList.add("card");
+      let face = document.createElement("img");
+      face.setAttribute("src", "assets/citizen.jpg");
+      citizen.appendChild(face);
+      playerContainer.appendChild(citizen);
+    }
+  }
+};
 
 document.addEventListener("DOMContentLoaded", () => {
   // make a function that adds cards to each players hand based on whether you are emperor or slave and whether you are opponent.
@@ -142,8 +193,8 @@ document.addEventListener("DOMContentLoaded", () => {
     waiting();
   });
 
-  sock.on("startGame", () => {
-    startGame();
+  sock.on("startGame", (game) => {
+    startGame(game);
   });
 
   // document.querySelector(".create").addEventListener("click", hostGame(sock));
