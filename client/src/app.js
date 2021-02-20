@@ -95,46 +95,49 @@ const setupBoard = (setup) => {
   )[0];
 
   let opponentContainer = document.querySelector(".opponent");
-  for (let i = 0; i < 5; i++) {
-    let flipped = document.createElement("div");
-    flipped.classList.add("card");
-    let back = document.createElement("img");
-    back.setAttribute("src", "assets/back.jpg");
-    flipped.appendChild(back);
-    opponentContainer.appendChild(flipped);
+  if (opponentContainer.children.length === 0) {
+    for (let i = 0; i < 5; i++) {
+      let flipped = document.createElement("div");
+      flipped.classList.add("card");
+      let back = document.createElement("img");
+      back.setAttribute("src", "assets/back.jpg");
+      flipped.appendChild(back);
+      opponentContainer.appendChild(flipped);
+    }
   }
 
   let playerContainer = document.querySelector(".player");
-  if (player.player === 1) {
-    let emperor = document.createElement("div");
-    emperor.classList.add("card");
-    let face = document.createElement("img");
-    face.setAttribute("src", "assets/emperor.jpg");
-    emperor.appendChild(face);
-    playerContainer.appendChild(emperor);
-
-    for (let i = 0; i < 4; i++) {
-      let citizen = document.createElement("div");
-      citizen.classList.add("card");
+  if (playerContainer.children.length === 0) {
+    if (player.player === 1) {
+      let emperor = document.createElement("div");
+      emperor.classList.add("card");
       let face = document.createElement("img");
-      face.setAttribute("src", "assets/citizen.jpg");
-      citizen.appendChild(face);
-      playerContainer.appendChild(citizen);
-    }
-  } else if (player.player === 2) {
-    let slave = document.createElement("div");
-    slave.classList.add("card");
-    let face = document.createElement("img");
-    face.setAttribute("src", "assets/slave.jpg");
-    slave.appendChild(face);
-    playerContainer.appendChild(slave);
-    for (let i = 0; i < 4; i++) {
-      let citizen = document.createElement("div");
-      citizen.classList.add("card");
+      face.setAttribute("src", "assets/emperor.jpg");
+      emperor.appendChild(face);
+      playerContainer.appendChild(emperor);
+      for (let i = 0; i < 4; i++) {
+        let citizen = document.createElement("div");
+        citizen.classList.add("card");
+        let face = document.createElement("img");
+        face.setAttribute("src", "assets/citizen.jpg");
+        citizen.appendChild(face);
+        playerContainer.appendChild(citizen);
+      }
+    } else if (player.player === 2) {
+      let slave = document.createElement("div");
+      slave.classList.add("card");
       let face = document.createElement("img");
-      face.setAttribute("src", "assets/citizen.jpg");
-      citizen.appendChild(face);
-      playerContainer.appendChild(citizen);
+      face.setAttribute("src", "assets/slave.jpg");
+      slave.appendChild(face);
+      playerContainer.appendChild(slave);
+      for (let i = 0; i < 4; i++) {
+        let citizen = document.createElement("div");
+        citizen.classList.add("card");
+        let face = document.createElement("img");
+        face.setAttribute("src", "assets/citizen.jpg");
+        citizen.appendChild(face);
+        playerContainer.appendChild(citizen);
+      }
     }
   }
 };
