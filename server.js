@@ -50,16 +50,21 @@ io.on("connection", (sock) => {
   });
 
   sock.on("disconnect", () => {
-    Object.values(games).forEach((room) =>
+    Object.values(games).forEach((room) => {
+      let roomId = room.roomId;
       room.forEach((player) => {
         if (player.socketId === sock.id) {
           io.to(player.roomId).emit("message", {
             text: "Your partner has left! Please refresh and join a new room!",
           });
-          delete games[player.roomId];
+          room.splice(room.indexOf(player), 1);
+          // somehow boot the player in the room
         }
-      })
-    );
+      });
+      if (room.length == 0) {
+        delete games[roomId];
+      }
+    });
   });
 });
 

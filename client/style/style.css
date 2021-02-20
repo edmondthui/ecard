@@ -1,14 +1,13 @@
 /* CHAT CSS */
 
 .chat-wrapper {
-  flex: 2;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   margin: 20px;
   height: 450px;
-  width: 100%;
+  width: 400px;
   display: none;
   box-shadow: 3px 3px 15px;
   border-radius: 10px;
@@ -60,12 +59,13 @@
 }
 
 .message {
-  line-height: 0.7em;
   margin: 5px;
   padding: 10px;
   border-radius: 10px;
   width: 45%;
   list-style-type: none;
+  white-space: normal;
+  word-wrap: break-word;
 }
 
 .incoming {
@@ -83,7 +83,7 @@
 }
 
 .chat-messages {
-  width: 100%;
+  width: 400px;
   height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
