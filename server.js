@@ -25,6 +25,7 @@ io.on("connection", (sock) => {
     }
 
     sock.join(game.roomId);
+    game.socketId = sock.id;
 
     let players = io.sockets.adapter.rooms.get(game.roomId);
 
@@ -44,9 +45,21 @@ io.on("connection", (sock) => {
     }
 
     sock.on("message", (text) => {
-      io.to(game.gameId).emit("message", text);
+      io.to(game.roomId).emit("message", text);
     });
+  });
 
+  sock.on("disconnect", () => {
+    Object.values(games).forEach((room) =>
+      room.forEach((player) => {
+        if (player.socketId === sock.id) {
+          io.to(player.roomId).emit("message", {
+            text: "Your partner has left! Please refresh and join a new room!",
+          });
+          delete games[player.roomId];
+        }
+      })
+    );
   });
 });
 

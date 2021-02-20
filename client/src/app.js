@@ -5,6 +5,7 @@ let playerData = {
 };
 
 const message = (text) => {
+  console.log(text);
   const parent = document.querySelector(".chat-messages");
   const el = document.createElement("li");
   el.innerHTML = text.text;
