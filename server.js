@@ -128,6 +128,7 @@ io.on("connection", (sock) => {
           io.to(player.roomId).emit("message", {
             text: "Your partner has left!",
           });
+          io.to(player.roomId).emit("leaver");
           room.splice(room.indexOf(player), 1);
           // somehow boot the player in the room
         }
