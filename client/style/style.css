@@ -266,7 +266,7 @@ body {
 
 .playerCard {
   display: flex;
-  height: 360px;
+  height: 100%;
   justify-content: space-between;
   align-items: center;
   width: 80%;
@@ -299,6 +299,22 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.playbutton-round {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.round-container {
+  display: flex;
+}
+
+.game-text {
+  height: 50px;
 }
 
 /* MEDIA QUERY */

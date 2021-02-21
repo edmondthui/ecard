@@ -111,6 +111,9 @@ io.on("connection", (sock) => {
           player.card = "";
           player.result = "";
         });
+        if (games[game.roomId][playerIndex].round % 12 === 0) {
+          io.to(game.roomId).emit("gameOver", games[game.roomId]);
+        }
       } else {
         io.to(game.roomId).emit("waitingPlay");
       }

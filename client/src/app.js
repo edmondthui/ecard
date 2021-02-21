@@ -112,10 +112,15 @@ const setupBoard = (setup) => {
 
   let opponentContainer = document.querySelector(".opponent");
   if (opponentContainer.children.length !== 0) {
+    playerData.round += 1;
     while (opponentContainer.firstChild) {
       opponentContainer.removeChild(opponentContainer.lastChild);
     }
   }
+
+  //sets the round HTML INNER TEXT
+  let round = document.querySelector(".round");
+  round.innerHTML = playerData.round;
 
   //sets score HTML INNER TEXT
   let playerScore = document.querySelector(".playerScore");
@@ -134,7 +139,6 @@ const setupBoard = (setup) => {
 
   let playerContainer = document.querySelector(".player");
   if (playerContainer.children.length !== 0) {
-    playerData.round += 1;
     while (playerContainer.firstChild) {
       playerContainer.removeChild(playerContainer.lastChild);
     }
@@ -211,13 +215,35 @@ const play = (e) => {
   });
 };
 
-const delayRemovePlayed = () => {
+const delayRemovePlayed = (data, playerIndex) => {
+  const playCardButton = document.querySelector(".play");
+  const gameText = document.querySelector(".game-text");
+  playCardButton.disabled = true;
   let playerPlayed = document.querySelector(".playerPlayedCard");
   let opponentPlayed = document.querySelector(".opponentPlayedCard");
+  if (
+    data[playerIndex].result === "win" ||
+    data[playerIndex].result === "bigwin"
+  ) {
+    gameText.innerHTML = "You won the round!";
+  } else if (
+    data[playerIndex].result === "lose" ||
+    data[playerIndex].result === "bigloss"
+  ) {
+    gameText.innerHTML = "You lost the round!";
+  } else {
+    gameText.innerHTML = "Draw!";
+  }
   setTimeout(() => {
     playerPlayed.removeChild(playerPlayed.firstChild);
     opponentPlayed.removeChild(opponentPlayed.firstChild);
+    playCardButton.disabled = false;
+    gameText.innerHTML = "";
   }, 2000);
+};
+
+const endGame = (game) => {
+  console.log("gameOver");
 };
 
 (() => {
@@ -235,6 +261,10 @@ const delayRemovePlayed = () => {
 
   sock.on("startGame", (game) => {
     startGame(game);
+  });
+
+  sock.on("gameOver", (game) => {
+    endGame(game);
   });
 
   sock.on("result", (data) => {
@@ -301,10 +331,10 @@ const delayRemovePlayed = () => {
       citizen.appendChild(face);
       opponentPlayed.appendChild(citizen);
     }
-    delayRemovePlayed();
+    delayRemovePlayed(data, playerIndex);
     playerData.card = "";
     const playCardButton = document.querySelector(".play");
-    playCardButton.disabled = false;
+    // playCardButton.disabled = false;
     playCardButton.innerHTML = "Play Card";
     let opponentContainer = document.querySelector(".opponent");
     opponentContainer.removeChild(opponentContainer.lastChild);
