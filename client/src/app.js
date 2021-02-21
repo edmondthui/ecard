@@ -8,7 +8,7 @@ let playerData = {
   score: 0,
   oScore: 0,
   result: "",
-  round: 0,
+  round: 1,
 };
 
 const message = (text) => {
@@ -134,6 +134,7 @@ const setupBoard = (setup) => {
 
   let playerContainer = document.querySelector(".player");
   if (playerContainer.children.length !== 0) {
+    playerData.round += 1;
     while (playerContainer.firstChild) {
       playerContainer.removeChild(playerContainer.lastChild);
     }
@@ -244,12 +245,21 @@ const delayRemovePlayed = () => {
     let opponentPlayed = document.querySelector(".opponentPlayedCard");
     if (data[playerIndex].result === "win") {
       playerData.score += 1;
-      let citizen = document.createElement("div");
-      citizen.classList.add("citizen", "card");
-      let face = document.createElement("img");
-      face.setAttribute("src", "assets/citizen.jpg");
-      citizen.appendChild(face);
-      opponentPlayed.appendChild(citizen);
+      if (data[playerIndex].card === "citizen") {
+        let slave = document.createElement("div");
+        slave.classList.add("slave", "card");
+        let face = document.createElement("img");
+        face.setAttribute("src", "assets/slave.jpg");
+        slave.appendChild(face);
+        opponentPlayed.appendChild(slave);
+      } else {
+        let citizen = document.createElement("div");
+        citizen.classList.add("citizen", "card");
+        let face = document.createElement("img");
+        face.setAttribute("src", "assets/citizen.jpg");
+        citizen.appendChild(face);
+        opponentPlayed.appendChild(citizen);
+      }
     } else if (data[playerIndex].result === "bigwin") {
       playerData.score += 3;
       let emperor = document.createElement("div");
@@ -260,12 +270,21 @@ const delayRemovePlayed = () => {
       opponentPlayed.appendChild(emperor);
     } else if (data[playerIndex].result === "lose") {
       playerData.oScore += 1;
-      let emperor = document.createElement("div");
-      emperor.classList.add("emperor", "card");
-      let face = document.createElement("img");
-      face.setAttribute("src", "assets/emperor.jpg");
-      emperor.appendChild(face);
-      opponentPlayed.appendChild(emperor);
+      if (data[playerIndex].card === "slave") {
+        let citizen = document.createElement("div");
+        citizen.classList.add("citizen", "card");
+        let face = document.createElement("img");
+        face.setAttribute("src", "assets/citizen.jpg");
+        citizen.appendChild(face);
+        opponentPlayed.appendChild(citizen);
+      } else {
+        let emperor = document.createElement("div");
+        emperor.classList.add("emperor", "card");
+        let face = document.createElement("img");
+        face.setAttribute("src", "assets/emperor.jpg");
+        emperor.appendChild(face);
+        opponentPlayed.appendChild(emperor);
+      }
     } else if (data[playerIndex].result === "bigloss") {
       playerData.oScore += 3;
       let slave = document.createElement("div");

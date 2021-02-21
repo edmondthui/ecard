@@ -52,6 +52,15 @@ io.on("connection", (sock) => {
       let opponentIndex = 1 - playerIndex;
       console.log(cardData);
       games[game.roomId][playerIndex].card = cardData.card;
+      games[game.roomId][playerIndex].round = cardData.round;
+
+      //switches players after 3 rounds
+      if (games[game.roomId][playerIndex].round % 3 === 0) {
+        games[game.roomId][playerIndex].player === 1
+          ? (games[game.roomId][playerIndex].player = 2)
+          : (games[game.roomId][playerIndex].player = 1);
+      }
+      console.log(games);
       if (games[game.roomId][0].card && games[game.roomId][1].card) {
         if (
           games[game.roomId][playerIndex].card === "citizen" &&
