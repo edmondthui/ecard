@@ -1,5 +1,9 @@
 /* RIGHT BAR INFO & CHAT CSS */
 
+.audio-button:hover {
+  cursor: pointer;
+}
+
 .score {
   display: flex;
 }
