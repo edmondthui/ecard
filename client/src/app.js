@@ -225,10 +225,17 @@ const delayRemovePlayed = () => {
 
   sock.on("result", (data) => {
     let playerIndex = data.findIndex(
-      (player) => player.name === playerData.name
+      (player) => player.username === playerData.username
     );
+    console.log(playerIndex);
     let opponentPlayed = document.querySelector(".opponentPlayedCard");
     if (data[playerIndex].result === "win") {
+      let citizen = document.createElement("div");
+      citizen.classList.add("citizen", "card");
+      let face = document.createElement("img");
+      face.setAttribute("src", "assets/citizen.jpg");
+      citizen.appendChild(face);
+      opponentPlayed.appendChild(citizen);
     } else if (data[playerIndex].result === "bigwin") {
       let emperor = document.createElement("div");
       emperor.classList.add("emperor", "card");
@@ -237,6 +244,13 @@ const delayRemovePlayed = () => {
       emperor.appendChild(face);
       opponentPlayed.appendChild(emperor);
     } else if (data[playerIndex].result === "lose") {
+      console.log(data);
+      let emperor = document.createElement("div");
+      emperor.classList.add("emperor", "card");
+      let face = document.createElement("img");
+      face.setAttribute("src", "assets/emperor.jpg");
+      emperor.appendChild(face);
+      opponentPlayed.appendChild(emperor);
     } else if (data[playerIndex].result === "bigloss") {
       let slave = document.createElement("div");
       slave.classList.add("slave", "card");
