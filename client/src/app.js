@@ -243,6 +243,7 @@ const delayRemovePlayed = () => {
     console.log(playerIndex);
     let opponentPlayed = document.querySelector(".opponentPlayedCard");
     if (data[playerIndex].result === "win") {
+      playerData.score += 1;
       let citizen = document.createElement("div");
       citizen.classList.add("citizen", "card");
       let face = document.createElement("img");
@@ -250,6 +251,7 @@ const delayRemovePlayed = () => {
       citizen.appendChild(face);
       opponentPlayed.appendChild(citizen);
     } else if (data[playerIndex].result === "bigwin") {
+      playerData.score += 3;
       let emperor = document.createElement("div");
       emperor.classList.add("emperor", "card");
       let face = document.createElement("img");
@@ -257,7 +259,7 @@ const delayRemovePlayed = () => {
       emperor.appendChild(face);
       opponentPlayed.appendChild(emperor);
     } else if (data[playerIndex].result === "lose") {
-      console.log(data);
+      playerData.oScore += 1;
       let emperor = document.createElement("div");
       emperor.classList.add("emperor", "card");
       let face = document.createElement("img");
@@ -265,6 +267,7 @@ const delayRemovePlayed = () => {
       emperor.appendChild(face);
       opponentPlayed.appendChild(emperor);
     } else if (data[playerIndex].result === "bigloss") {
+      playerData.oScore += 3;
       let slave = document.createElement("div");
       slave.classList.add("slave", "card");
       let face = document.createElement("img");
