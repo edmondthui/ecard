@@ -49,13 +49,59 @@ io.on("connection", (sock) => {
       let playerIndex = games[game.roomId].findIndex(
         (game) => game.username === cardData.username
       );
+      let opponentIndex = 1 - playerIndex;
+      console.log(cardData);
       games[game.roomId][playerIndex].card = cardData.card;
       if (games[game.roomId][0].card && games[game.roomId][1].card) {
-        console.log(games[game.roomId]);
-        let result = {};
+        if (
+          games[game.roomId][playerIndex].card === "citizen" &&
+          games[game.roomId][opponentIndex].card === "citizen"
+        ) {
+          games[game.roomId][playerIndex].result = "draw";
+          games[game.roomId][opponentIndex].result = "draw";
+        } else if (
+          games[game.roomId][playerIndex].card === "citizen" &&
+          games[game.roomId][opponentIndex].card === "emperor"
+        ) {
+          games[game.roomId][playerIndex].result = "lose";
+          games[game.roomId][opponentIndex].result = "win";
+        } else if (
+          games[game.roomId][playerIndex].card === "emperor" &&
+          games[game.roomId][opponentIndex].card === "citizen"
+        ) {
+          games[game.roomId][playerIndex].result = "win";
+          games[game.roomId][opponentIndex].result = "lose";
+        } else if (
+          games[game.roomId][playerIndex].card === "slave" &&
+          games[game.roomId][opponentIndex].card === "emperor"
+        ) {
+          games[game.roomId][playerIndex].result = "bigwin";
+          games[game.roomId][opponentIndex].result = "bigloss";
+        } else if (
+          games[game.roomId][playerIndex].card === "emperor" &&
+          games[game.roomId][opponentIndex].card === "slave"
+        ) {
+          games[game.roomId][playerIndex].result = "bigloss";
+          games[game.roomId][opponentIndex].result = "bigwin";
+        } else if (
+          games[game.roomId][playerIndex].card === "slave" &&
+          games[game.roomId][opponentIndex].card === "citizen"
+        ) {
+          games[game.roomId][playerIndex].result = "lose";
+          games[game.roomId][opponentIndex].result = "win";
+        } else if (
+          games[game.roomId][playerIndex].card === "citizen" &&
+          games[game.roomId][opponentIndex].card === "slave"
+        ) {
+          games[game.roomId][playerIndex].result = "win";
+          games[game.roomId][opponentIndex].result = "lose";
+        }
         // the result will be who wins and the current score which will be added to the player data
-        io.to(game.roomId).emit("result", result);
-        games[game.roomId].forEach((player) => (player.card = ""));
+        io.to(game.roomId).emit("result", games[game.roomId]);
+        games[game.roomId].forEach((player) => {
+          player.card = "";
+          player.result = "";
+        });
       } else {
         io.to(game.roomId).emit("waitingPlay");
       }

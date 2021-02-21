@@ -6,6 +6,7 @@ let playerData = {
   player: 0,
   card: "",
   score: "",
+  result: "",
 };
 
 const message = (text) => {
@@ -94,7 +95,7 @@ const startGame = (setup) => {
   name.innerHTML = playerData.username;
 
   let music = document.querySelector(".music");
-  music.volume = 0.005;
+  music.volume = 0.01;
   music.play();
 
   setupBoard(setup);
@@ -181,16 +182,28 @@ const play = (e) => {
   e.preventDefault();
   const cards = document.querySelectorAll(".card");
   const container = document.querySelector(".player");
+  const playerContainer = document.querySelector(".playerPlayedCard");
   cards.forEach((card) => {
     if (card.classList.contains("selected")) {
       card.classList.remove("selected");
       let audio = new Audio("assets/zawazawa.wav");
+
       audio.play();
       playerData.card = card.classList[0];
       sock.emit("play", playerData);
       container.removeChild(card);
+      playerContainer.appendChild(card);
     }
   });
+};
+
+const delayRemovePlayed = () => {
+  let playerPlayed = document.querySelector(".playerPlayedCard");
+  let opponentPlayed = document.querySelector(".opponentPlayedCard");
+  setTimeout(() => {
+    playerPlayed.removeChild(playerPlayed.firstChild);
+    opponentPlayed.removeChild(opponentPlayed.firstChild);
+  }, 2000);
 };
 
 (() => {
@@ -210,17 +223,55 @@ const play = (e) => {
     startGame(game);
   });
 
-  sock.on("result", (result) => {
+  sock.on("result", (data) => {
+    let playerIndex = data.findIndex(
+      (player) => player.name === playerData.name
+    );
+    let opponentPlayed = document.querySelector(".opponentPlayedCard");
+    if (data[playerIndex].result === "win") {
+    } else if (data[playerIndex].result === "bigwin") {
+      let emperor = document.createElement("div");
+      emperor.classList.add("emperor", "card");
+      let face = document.createElement("img");
+      face.setAttribute("src", "assets/emperor.jpg");
+      emperor.appendChild(face);
+      opponentPlayed.appendChild(emperor);
+    } else if (data[playerIndex].result === "lose") {
+    } else if (data[playerIndex].result === "bigloss") {
+      let slave = document.createElement("div");
+      slave.classList.add("slave", "card");
+      let face = document.createElement("img");
+      face.setAttribute("src", "assets/slave.jpg");
+      slave.appendChild(face);
+      opponentPlayed.appendChild(slave);
+    } else if (data[playerIndex].result === "draw") {
+      let citizen = document.createElement("div");
+      citizen.classList.add("citizen", "card");
+      let face = document.createElement("img");
+      face.setAttribute("src", "assets/citizen.jpg");
+      citizen.appendChild(face);
+      opponentPlayed.appendChild(citizen);
+    }
+    delayRemovePlayed();
     playerData.card = "";
     const playCardButton = document.querySelector(".play");
     playCardButton.disabled = false;
     playCardButton.innerHTML = "Play Card";
     let opponentContainer = document.querySelector(".opponent");
     opponentContainer.removeChild(opponentContainer.lastChild);
-    if (result === "win" || result === "lose") {
-      //reset the board
+    let music = document.querySelector(".music");
+    console.log(data);
+
+    if (
+      data[playerIndex].result === "win" ||
+      data[playerIndex].result === "lose" ||
+      data[playerIndex].result === "bigwin" ||
+      data[playerIndex].result === "bigloss"
+    ) {
+      music.volume = 0.01;
+      setupBoard(data);
     } else {
-      //continue with the game
+      music.volume = music.volume * 2;
     }
   });
 

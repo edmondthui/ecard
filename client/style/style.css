@@ -157,6 +157,10 @@ body {
 
 /* JOIN ROOM CSS */
 
+.join-game form label {
+  color: white;
+}
+
 .join-game {
   position: absolute;
   top: 50%;
@@ -212,11 +216,8 @@ body {
 
 .loading h1 span {
   animation-name: blink;
-
   animation-duration: 1.4s;
-
   animation-iteration-count: infinite;
-
   animation-fill-mode: both;
 }
 
@@ -240,4 +241,36 @@ body {
 
 .loading h1 span:nth-child(3) {
   animation-delay: 0.4s;
+}
+
+/* PLAYED CARDS */
+
+.playerCard {
+  display: flex;
+  height: 360px;
+  justify-content: space-between;
+  align-items: center;
+  width: 80%;
+}
+
+.played {
+  width: 188px;
+  height: 244px;
+}
+
+.play {
+  width: 180px;
+  color: white;
+  height: 60px;
+  cursor: pointer;
+  background-color: #718d74;
+  border: 1px transparent;
+  outline: none;
+  transition: 1s ease-in-out;
+  border-radius: 50px;
+}
+
+.play:hover {
+  transition: 1s ease-in-out;
+  background-color: #356d3c;
 }
