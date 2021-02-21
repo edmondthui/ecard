@@ -7,6 +7,7 @@ let playerData = {
   card: "",
   score: "",
   result: "",
+  round: 0,
 };
 
 const message = (text) => {
@@ -91,6 +92,8 @@ const startGame = (setup) => {
   game.setAttribute("style", "display: flex");
   let chat = document.querySelector(".chat-wrapper");
   chat.setAttribute("style", "display: flex");
+  let info = document.querySelector(".game-info");
+  info.setAttribute("style", "display: flex");
   let name = document.querySelector(".name");
   name.innerHTML = playerData.username;
 
