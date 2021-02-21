@@ -5,7 +5,8 @@ let playerData = {
   roomId: "",
   player: 0,
   card: "",
-  score: "",
+  score: 0,
+  oScore: 0,
   result: "",
   round: 0,
 };
@@ -115,6 +116,13 @@ const setupBoard = (setup) => {
       opponentContainer.removeChild(opponentContainer.lastChild);
     }
   }
+
+  //sets score HTML INNER TEXT
+  let playerScore = document.querySelector(".playerScore");
+  let opponentScore = document.querySelector(".opponentScore");
+  playerScore.innerHTML = playerData.score;
+  opponentScore.innerHTML = playerData.oScore;
+
   for (let i = 0; i < 5; i++) {
     let flipped = document.createElement("div");
     flipped.classList.add("card");
