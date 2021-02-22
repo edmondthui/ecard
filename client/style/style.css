@@ -1,11 +1,42 @@
 /* RIGHT BAR INFO & CHAT CSS */
 
+.info {
+  display: none;
+  background-color: white;
+  padding: 20px;
+  width: 90%;
+  top: 35px;
+  box-shadow: 3px 3px 15px;
+  border-radius: 10px;
+}
+
+.info:hover {
+  display: block;
+  position: absolute;
+}
+
+.info-button {
+  border: 2px solid black;
+  padding: 5px;
+  text-align: center;
+}
+
+.info-button:hover {
+  cursor: pointer;
+}
+
+.info-button:hover + div {
+  position: absolute;
+  display: block;
+}
+
 .audio-button:hover {
   cursor: pointer;
 }
 
 .score {
   display: flex;
+  width: 100%;
 }
 
 .right-bar {
@@ -17,6 +48,8 @@
 }
 
 .game-info {
+  position: relative;
+  width: 100%;
   display: none;
   flex-direction: column;
   justify-content: center;
