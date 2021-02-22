@@ -97,8 +97,8 @@ const startGame = (setup) => {
   info.setAttribute("style", "display: flex");
   let name = document.querySelector(".name");
   name.innerHTML = playerData.username;
-  // let right = document.querySelector(".right-bar");
-  // right.style.width = "20%";
+  let right = document.querySelector(".right-bar");
+  right.style.width = "30%";
 
   let music = document.querySelector(".music");
   music.volume = 0.01;
