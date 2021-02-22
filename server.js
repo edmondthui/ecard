@@ -50,7 +50,6 @@ io.on("connection", (sock) => {
         (game) => game.username === cardData.username
       );
       let opponentIndex = 1 - playerIndex;
-      console.log(cardData);
       games[game.roomId][playerIndex].card = cardData.card;
       games[game.roomId][playerIndex].round = cardData.round;
 
@@ -60,7 +59,6 @@ io.on("connection", (sock) => {
           ? (games[game.roomId][playerIndex].player = 2)
           : (games[game.roomId][playerIndex].player = 1);
       }
-      console.log(games);
       if (games[game.roomId][0].card && games[game.roomId][1].card) {
         if (
           games[game.roomId][playerIndex].card === "citizen" &&
@@ -140,14 +138,8 @@ io.on("connection", (sock) => {
   });
 });
 
-io.on("disconnect", (sock) => {
-  // console.log("someone disconnected");
-});
-
 server.on("error", (err) => {
-  console.error(err);
 });
 
 server.listen(port, () => {
-  // console.log("server is ready");
 });

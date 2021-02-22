@@ -12,7 +12,6 @@ let playerData = {
 };
 
 const message = (text) => {
-  console.log(text);
   const parent = document.querySelector(".chat-messages");
   const el = document.createElement("li");
   el.innerHTML = text.text;
@@ -201,12 +200,16 @@ const play = (e) => {
   const cards = document.querySelectorAll(".card");
   const container = document.querySelector(".player");
   const playerContainer = document.querySelector(".playerPlayedCard");
+  const audioButton = document.querySelector(".audio");
   cards.forEach((card) => {
     if (card.classList.contains("selected")) {
       card.classList.remove("selected");
-      let audio = new Audio("assets/zawazawa.wav");
 
-      audio.play();
+      if (audioButton.classList.contains("fa-volume-up")) {
+        let audio = new Audio("assets/zawazawa.wav");
+        audio.play();
+      }
+
       playerData.card = card.classList[0];
       sock.emit("play", playerData);
       container.removeChild(card);
@@ -293,7 +296,6 @@ const leaveButton = () => {
     let playerIndex = data.findIndex(
       (player) => player.username === playerData.username
     );
-    console.log(playerIndex);
     let opponentPlayed = document.querySelector(".opponentPlayedCard");
     if (data[playerIndex].result === "win") {
       playerData.score += 1;
@@ -361,7 +363,6 @@ const leaveButton = () => {
     let opponentContainer = document.querySelector(".opponent");
     opponentContainer.removeChild(opponentContainer.lastChild);
     let music = document.querySelector(".music");
-    console.log(data);
 
     if (
       data[playerIndex].result === "win" ||
