@@ -1,5 +1,9 @@
 # Multiplayer E-card From Kaiji: The Ultimate Gambler
 
+This is a multiplayer E Card game from Kaiji built with JavaScript. It is like rock, paper, scissors. Emperor beats civilians. Slave beats emperor. Civilians beat slave.
+
+There are four rounds, with each round lasting three turns. The slave and the emperor will swap after each round. Winning as the emperor grants you one point, and winning as the slave grants you three points. Whoever has the highest score after the last round wins.
+
 ## Technologies Used
 * Socket.io
 * Express
