@@ -111,7 +111,6 @@ const setupBoard = (setup) => {
 
   let opponentContainer = document.querySelector(".opponent");
   if (opponentContainer.children.length !== 0) {
-    playerData.round += 1;
     while (opponentContainer.firstChild) {
       opponentContainer.removeChild(opponentContainer.lastChild);
     }
@@ -252,9 +251,11 @@ const endGame = (game) => {
   playCardButton.disabled = true;
   round.innerHTML = "";
   if (playerData.score > playerData.oScore) {
-    turn.innerHTML = "You Win! Please exit to join a new room!";
+    turn.innerHTML = "You Win! Please exit and join a new room!";
+  } else if (playerData.score === playerData.oScore) {
+    turn.innerHTML = "You Drawed! Please exit and join a new room!";
   } else {
-    turn.innerHTML = "You Lose! Please exit to join a new room!";
+    turn.innerHTML = "You Lose! Please exit and join a new room!";
   }
   leaveButton();
 };
@@ -282,10 +283,6 @@ const leaveButton = () => {
 
   sock.on("startGame", (game) => {
     startGame(game);
-  });
-
-  sock.on("gameOver", (game) => {
-    endGame(game);
   });
 
   sock.on("leaver", () => {
@@ -370,8 +367,14 @@ const leaveButton = () => {
       data[playerIndex].result === "bigwin" ||
       data[playerIndex].result === "bigloss"
     ) {
-      music.volume = 0.01;
-      setupBoard(data);
+      if (playerData.round % 12 === 0) {
+        // the game has ended end game
+        endGame();
+      } else {
+        music.volume = 0.01;
+        playerData.round += 1;
+        setupBoard(data);
+      }
     } else {
       music.volume = music.volume * 2;
     }
