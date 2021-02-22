@@ -1,11 +1,19 @@
 /* RIGHT BAR INFO & CHAT CSS */
+.links {
+  display: flex;
+}
+
+.links a {
+  color: black;
+  padding: 5px;
+}
 
 .info {
   display: none;
   background-color: white;
   padding: 20px;
   width: 90%;
-  top: 33px;
+  top: 83px;
   box-shadow: 3px 3px 15px;
   border-radius: 10px;
 }
