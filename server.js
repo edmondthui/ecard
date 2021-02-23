@@ -14,7 +14,7 @@ const port = process.env.PORT || 8080;
 let games = {};
 
 io.on("connection", (sock) => {
-  sock.emit("message", { text: "You are connected" });
+  // sock.emit("message", { text: "You are connected" });
 
   sock.on("joinGame", (game) => {
     while (
@@ -43,6 +43,10 @@ io.on("connection", (sock) => {
 
     sock.on("message", (text) => {
       io.to(game.roomId).emit("message", text);
+    });
+
+    io.to(game.roomId).emit("message", {
+      text: `${game.username} has joined the room.`,
     });
 
     sock.on("play", (cardData) => {

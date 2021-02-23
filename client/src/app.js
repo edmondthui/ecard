@@ -84,6 +84,11 @@ const waiting = (game) => {
 };
 
 const startGame = (setup) => {
+  playerData.card = "";
+  playerData.score = 0;
+  playerData.oScore = 0;
+  playerData.result = "";
+  playerData.round = 1;
   let loading = document.querySelector(".loading");
   if (loading) {
     loading.setAttribute("style", "display: none");
@@ -104,6 +109,7 @@ const startGame = (setup) => {
   music.play();
 
   setupBoard(setup);
+  playButton();
 };
 
 const setupBoard = (setup) => {
@@ -263,9 +269,18 @@ const endGame = (game) => {
 const leaveButton = () => {
   const playCardButton = document.querySelector(".play");
   playCardButton.innerHTML = "Leave Game";
-  playCardButton.addEventListener("click", () => {
-    window.location.href = "https://zawazawa.herokuapp.com/";
-  });
+  playCardButton.addEventListener("click", relocate);
+};
+
+const relocate = () => {
+  window.location.href = "https://zawazawa.herokuapp.com/";
+};
+
+const playButton = () => {
+  const playCardButton = document.querySelector(".play");
+  playCardButton.innerHTML = "Play Card";
+  playCardButton.removeEventListener("click", relocate);
+  playButton.addEventListener("click", play);
 };
 
 (() => {

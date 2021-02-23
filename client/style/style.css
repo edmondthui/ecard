@@ -53,6 +53,7 @@
   align-items: center;
   justify-content: center;
   padding-right: 3%;
+  max-width: 20%;
 }
 
 .game-info {
@@ -78,7 +79,7 @@
   display: none;
   box-shadow: 3px 3px 15px;
   border-radius: 10px;
-  min-width: 300px;
+  max-width: 100%;
 }
 
 .audio {
@@ -200,7 +201,7 @@ body {
   align-items: center;
   padding-left: 3%;
   padding-right: 3%;
-  width: 100%;
+  width: 80%;
   display: none;
 }
 
@@ -222,6 +223,10 @@ body {
 }
 
 /* JOIN ROOM CSS */
+
+.join:hover {
+  cursor: pointer;
+}
 
 .join-game form label {
   color: white;
