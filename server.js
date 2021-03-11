@@ -13,6 +13,10 @@ const port = process.env.PORT || 8080;
 
 let games = {};
 
+app.get("/image", (request, res) => {
+  res.sendFile(path.join(__dirname, "./client/assets/ecard_og_image.gif"));
+});
+
 io.on("connection", (sock) => {
   // sock.emit("message", { text: "You are connected" });
 
